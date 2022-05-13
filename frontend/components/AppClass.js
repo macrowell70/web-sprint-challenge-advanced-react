@@ -17,37 +17,74 @@ export default class AppClass extends React.Component {
       this.setState({
         ...this.state,
         steps: this.state.steps + 1,
-        x: this.state.x + 1
+        x: this.state.x + 1,
+        squares: this.state.squares.map((square, idx) => {
+          if (square === "B") {
+            return ""
+          } else if (this.state.squares[idx - 1] === "B") {
+            return "B"
+          }
+        }),
+        message: ""
       })
     } else if (direction === "left" && this.state.x > 1) {
       this.setState({
         ...this.state,
         steps: this.state.steps + 1,
-        x: this.state.x - 1
+        x: this.state.x - 1,
+        squares: this.state.squares.map((square, idx) => {
+          if (square === "B") {
+            return ""
+          } else if (this.state.squares[idx + 1] === "B") {
+            return "B"
+          }
+        }),
+        message: ""
       })
     } else if (direction === "up" && this.state.y > 1) {
       this.setState({
         ...this.state,
         steps: this.state.steps + 1,
-        y: this.state.y - 1
+        y: this.state.y - 1,
+        squares: this.state.squares.map((square, idx) => {
+          if (square === "B") {
+            return ""
+          } else if (this.state.squares[idx + 3] === "B") {
+            return "B"
+          }
+        }),
+        message: ""
       })
     } else if (direction === "down" && this.state.y < 3) {
       this.setState({
         ...this.state,
         steps: this.state.steps + 1,
-        y: this.state.y + 1
+        y: this.state.y + 1,
+        squares: this.state.squares.map((square, idx) => {
+          if (square === "B") {
+            return ""
+          } else if (this.state.squares[idx - 3] === "B") {
+            return "B"
+          }
+        }),
+        message: ""
       })
     } else if (direction === "reset") {
       this.setState({
         ...this.state,
-        steps: 0,
         x: 2,
-        y: 2
+        y: 2,
+        steps: 0,
+        email: "",
+        squares: ["", "", "", "", "B", "", "", "", ""],
+        message: "",
+      })
+    } else {
+      this.setState({
+        ...this.state,
+        message: `You can't go ${direction}`
       })
     }
-    //when right button is clicked, x = x+1
-    //squares.map
-    //toggleActive
   }
 
   handleChange = () => {
