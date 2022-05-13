@@ -83,6 +83,7 @@ export default class AppClass extends React.Component {
         squares: ["", "", "", "", "B", "", "", "", ""],
         message: "",
       })
+      document.querySelector("#email").value = ""
     } else {
       this.setState({
         ...this.state,
@@ -114,7 +115,14 @@ export default class AppClass extends React.Component {
         email: ""
       })
     })
-    
+    .catch(err => {
+      this.setState({
+        ...this.state,
+        message: err.response.data.message
+      })
+      
+    })
+    document.querySelector("#email").value = ""
   }
 
   render() {
@@ -123,7 +131,7 @@ export default class AppClass extends React.Component {
       <div id="wrapper" className={className}>
         <div className="info">
           <h3 id="coordinates">Coordinates {`(${this.state.x}, ${this.state.y})`}</h3>
-          <h3 id="steps">You moved {this.state.steps} times</h3>
+          <h3 id="steps">{this.state.steps === 1 ? `You moved ${this.state.steps} time` : `You moved ${this.state.steps} times`}</h3>
         </div>
         <div id="grid">
           {this.state.squares.map((square, i) => (
