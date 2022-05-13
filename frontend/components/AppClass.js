@@ -2,34 +2,89 @@ import React from 'react'
 
 export default class AppClass extends React.Component {
   state = {
-    coordinates: "(2, 2)",
-    moves: 0,
     x: 2,
     y: 2,
+    steps: 0,
     email: "",
-    grid: ["", "", "", "", "B", "", "", "", ""]
+    squares: ["", "", "", "", "B", "", "", "", ""],
+    message: "",
+    active: false
   }
+
+
+  handleClick = (direction) => {
+    if(direction === "right" && this.state.x < 3){
+      this.setState({
+        ...this.state,
+        steps: this.state.steps + 1,
+        x: this.state.x + 1
+      })
+    } else if (direction === "left" && this.state.x > 1) {
+      this.setState({
+        ...this.state,
+        steps: this.state.steps + 1,
+        x: this.state.x - 1
+      })
+    } else if (direction === "up" && this.state.y > 1) {
+      this.setState({
+        ...this.state,
+        steps: this.state.steps + 1,
+        y: this.state.y - 1
+      })
+    } else if (direction === "down" && this.state.y < 3) {
+      this.setState({
+        ...this.state,
+        steps: this.state.steps + 1,
+        y: this.state.y + 1
+      })
+    } else if (direction === "reset") {
+      this.setState({
+        ...this.state,
+        steps: 0,
+        x: 2,
+        y: 2
+      })
+    }
+    //when right button is clicked, x = x+1
+    //squares.map
+    //toggleActive
+  }
+
+  handleChange = () => {
+
+  }
+
+  handleSubmit = () => {
+
+  }
+
+  //click handler
+  //5 click handlers???
+
+  //submit handler
+  //active square class
 
   render() {
     const { className } = this.props
     return (
       <div id="wrapper" className={className}>
         <div className="info">
-          <h3 id="coordinates">Coordinates {this.state.coordinates}</h3>
-          <h3 id="steps">You moved {this.state.moves} times</h3>
+          <h3 id="coordinates">Coordinates {`(${this.state.x}, ${this.state.y})`}</h3>
+          <h3 id="steps">You moved {this.state.steps} times</h3>
         </div>
         <div id="grid">
-          {this.state.grid.map((element, i) => <div key={i} className="square">{element}</div>)}
+          {this.state.squares.map((square, i) => (
+            <div key={i} className={square ? "square active" : "square"}>{square}</div>))}
         </div>
         <div className="info">
-          <h3 id="message"></h3>
+          <h3 id="message">{this.state.message}</h3>
         </div>
         <div id="keypad">
-          <button id="left">LEFT</button>
-          <button id="up">UP</button>
-          <button id="right">RIGHT</button>
-          <button id="down">DOWN</button>
-          <button id="reset">reset</button>
+          <button id="left" onClick={() => this.handleClick("left")}>LEFT</button>
+          <button id="up" onClick={() => this.handleClick("up")}>UP</button>
+          <button id="right" onClick={() => this.handleClick("right")}>RIGHT</button>
+          <button id="down" onClick={() => this.handleClick("down")}>DOWN</button>
+          <button id="reset" onClick={() => this.handleClick("reset")}>reset</button>
         </div>
         <form>
           <input id="email" type="email" placeholder="type email"></input>
