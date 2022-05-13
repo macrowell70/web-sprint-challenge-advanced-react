@@ -117,12 +117,6 @@ export default class AppClass extends React.Component {
     
   }
 
-  //click handler
-  //5 click handlers???
-
-  //submit handler
-  //active square class
-
   render() {
     const { className } = this.props
     return (
