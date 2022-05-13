@@ -1,4 +1,8 @@
 import React from 'react'
+import axios from 'axios'
+
+
+const URL = "http://localhost:9000/api/result"
 
 export default class AppClass extends React.Component {
   state = {
@@ -87,12 +91,30 @@ export default class AppClass extends React.Component {
     }
   }
 
-  handleChange = () => {
-
+  handleChange = (evt) => {
+    this.setState({
+      ...this.state,
+      email: evt.target.value
+    })
   }
 
-  handleSubmit = () => {
-
+  handleSubmit = (evt) => {
+    evt.preventDefault();
+    const newPost = {
+      x: this.state.x,
+      y: this.state.y,
+      steps: this.state.steps,
+      email: this.state.email
+    }
+    axios.post(URL, newPost)
+    .then(res => {
+      this.setState({
+        ...this.state,
+        message: res.data.message,
+        email: ""
+      })
+    })
+    
   }
 
   //click handler
@@ -123,8 +145,8 @@ export default class AppClass extends React.Component {
           <button id="down" onClick={() => this.handleClick("down")}>DOWN</button>
           <button id="reset" onClick={() => this.handleClick("reset")}>reset</button>
         </div>
-        <form>
-          <input id="email" type="email" placeholder="type email"></input>
+        <form onSubmit={this.handleSubmit}>
+          <input id="email" type="email" placeholder="type email" onChange={this.handleChange}></input>
           <input id="submit" type="submit"></input>
         </form>
       </div>
